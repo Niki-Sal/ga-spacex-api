@@ -42,6 +42,12 @@ app.get('/v1/launchpads' , async (req, res) => {
     // const allCapsules = await db.Capsule.find();
 });
 
+app.get('/v1/launchpads/:name', async (req, res) => {
+    // let serial = req.params.serial;
+    const { name } = req.params;
+    const fetchLaunchpad = await db.Launchpad.find({ name });
+    res.json(fetchLaunchpad);
+});
 
 app.get('/v1/fetch-capsules', async (req, res) => {
     // Run axios
