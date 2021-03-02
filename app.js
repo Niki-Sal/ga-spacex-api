@@ -11,7 +11,16 @@ const db = require('./models');
 app.get('/company', async (req, res) => {
     const response = await axios.get('https://api.spacexdata.com/v4/company')
     const data = response.data
-    console.log(data)    
+    console.log(data) 
+    const { name, founder, employee } = data
+    db.Capsule.create({
+            name: name,
+            founder: founder,
+            employees: employees
+        }, (err, newCompany) => {
+            console.log(newCompany);
+        })
+    res.json(data)  
 })
 
 
