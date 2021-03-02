@@ -1,0 +1,25 @@
+{
+  "name": "mocha-api",
+  "description": "Building an API using SpaceX API via Github Collaboration",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/romebell/ga-spacex-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/romebell/ga-spacex-api/issues"
+  },
+  "homepage": "https://github.com/romebell/ga-spacex-api#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.18"
+  }
+}
