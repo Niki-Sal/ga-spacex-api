@@ -30,3 +30,7 @@ db.on('error', (err) => {
 module.exports = {
     Capsule: require('./capsule')
 }
+
+module.exports = {
+    Starlink: require('./starlink')
+}
