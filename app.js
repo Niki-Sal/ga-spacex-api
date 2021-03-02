@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 8000;
 const db = require('./models');
 
 
+
 // Route
 app.get('/v1', (req, res) => {
     res.send('Welcome to GA Space X API');
@@ -67,6 +68,63 @@ app.get('/v1/capsules/:serial', async (req, res) => {
     const fetchCapsule = await db.Capsule.find({ serial });
     res.json(fetchCapsule);
 });
+
+app.get('/v1/cores/fetch-cores', async (req, res) => {
+    // Run axios
+    const response = await axios.get('https://api.spacexdata.com/v4/cores');
+    const data = response.data; // array of objects [{}, {}, {}]
+    // add each object info to DB
+    for (let i = 0; i < data.length; i++) {
+        let coreObject = data[i]; // object
+        const { serial, status, last_update } = coreObject; // destructuring
+
+        db.Core.create({
+            serial: serial,
+            status: status,
+            lastUpdate: last_update
+        }, (err, newCore) => {
+            console.log(newCore);
+        });
+    }
+
+    res.json(data);
+});
+
+app.get('/v1/cores/fetch-cores-again', async (req, res) => {
+    const response = await axios.get('https://api.spacexdata.com/v4/cores');
+    const data = response.data; // array of objects [{}, {}, {}]
+
+    const newCores = await data.map((coreObject) => {
+        const { serial, status, last_update } = coreObject; // destructuring
+        const resultObj = {
+            serial: serial,
+            status: status,
+            lastUpdate: last_update
+        }
+        return resultObj;
+    });
+    // res.json(newCapsules);
+    // db.Capsule.collection.drop();
+    // Add newCapsules to DB
+    const allNewCores = await db.oree.create(newCores);
+    res.json(allNewCores);
+    // const allCapsules = await db.Capsule.find();
+});
+
+app.get('/v1/cores', async (req, res) => {
+    const fetchCores = await db.Cores.find(); // array of objects
+    res.json(fetchCores);
+});
+
+app.get('/v1/cores/:serial', async (req, res) => {
+    // let serial = req.params.serial;
+    const { serial } = req.params;
+    const fetchCore = await db.Core.find({ serial });
+    res.json(fetchCore);
+});
+
+// controllers
+// app.get('/v1/cores', require('./controllers/cores'))
 
 const server = app.listen(PORT, () => {
     console.log(`Server is running on PORT: ${PORT}`);
