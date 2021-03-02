@@ -71,3 +71,4 @@ app.get('/v1/capsules/:serial', async (req, res) => {
 const server = app.listen(PORT, () => {
     console.log(`Server is running on PORT: ${PORT}`);
 });
+
