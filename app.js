@@ -14,6 +14,35 @@ app.get('/v1', (req, res) => {
     res.send('Welcome to GA Space X API');
 });
 
+// Group-7 Launchpad
+app.get('/v1/launchpads' , async (req, res) => {
+    // get data with axios
+    const response = await axios.get('https://api.spacexdata.com/v4/launchpads')
+    const data = response.data;
+    const newLaunchpads = await data.map((LaunchpadObject) => {
+
+    // name: { type: String },
+    // region: String,
+    // latitude: Number,
+    // longitude: Number
+        const { name, region, latitude, longitude } = LaunchpadObject; // destructuring
+        const resultObj = {
+            name,
+            region,
+            latitude,
+            longitude
+        }
+        return resultObj;
+    });
+    // res.json(newCapsules);
+    // db.Capsule.collection.drop();
+    // Add newCapsules to DB
+    const allNewLaunchpads = await db.Launchpad.create(newLaunchpads);
+    res.json(allNewLaunchpads);
+    // const allCapsules = await db.Capsule.find();
+});
+
+
 app.get('/v1/fetch-capsules', async (req, res) => {
     // Run axios
     const response = await axios.get('https://api.spacexdata.com/v4/capsules');
