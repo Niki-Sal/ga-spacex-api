@@ -1,7 +1,13 @@
 {
+<<<<<<< HEAD
   "name": "mocha-api",
   "description": "Building an API using SpaceX API via Github Collaboration",
   "version": "1.0.0",
+=======
+  "name": "ga-spacex-api",
+  "version": "1.0.0",
+  "description": "Building an API using SpaceX API via Github Collaboration",
+>>>>>>> d80a148f58f87399c183d479e75d7b59ffaafd5b
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
