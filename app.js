@@ -11,11 +11,19 @@ const db = require('./models');
 app.get('/company', async (req, res) => {
     const response = await axios.get('https://api.spacexdata.com/v4/company')
     const data = response.data
-    console.log(data)    
+    
+    const { name, founder, employees } = data
+    db.Company.create({
+            name: name,
+            founder: founder,
+            employees: employees
+        }, (err, newCompany) => {
+            console.log(newCompany);
+        })
+    res.json(data)  
 })
 
-
-Route
+// Route
 app.get('/v1', (req, res) => {
     res.send('Welcome to GA Space X API');
 });

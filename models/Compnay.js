@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 // Make a capsuleSchema
 const companySchema = new Schema({
     name: String,
-    company: String,
+    founder: String,
     employees: Number,
 });
 
