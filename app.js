@@ -20,7 +20,7 @@ app.get('/company', async (req, res) => {
         }, (err, newCompany) => {
             console.log(newCompany);
         })
-    res.json(data)  
+    res.json(company)  
 })
 
 // Route
