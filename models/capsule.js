@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 
 // Make a capsuleSchema
 const capsuleSchema = new Schema({
-    serial: String,
+    serial: { type: String, unique: true },
     type: String,
-    waterLandings: Number
+    waterLandings: Number,
 });
 
 // Model

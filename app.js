@@ -10,11 +10,11 @@ const db = require('./models');
 
 
 // Route
-app.get('/', (req, res) => {
+app.get('/v1', (req, res) => {
     res.send('Welcome to GA Space X API');
 });
 
-app.get('/fetch-capsules', async (req, res) => {
+app.get('/v1/fetch-capsules', async (req, res) => {
     // Run axios
     const response = await axios.get('https://api.spacexdata.com/v4/capsules');
     const data = response.data; // array of objects [{}, {}, {}]
@@ -29,10 +29,43 @@ app.get('/fetch-capsules', async (req, res) => {
             waterLandings: water_landings
         }, (err, newCapsule) => {
             console.log(newCapsule);
-        })
+        });
     }
 
     res.json(data);
+});
+
+app.get('/v1/fetch-capsules-again', async (req, res) => {
+    const response = await axios.get('https://api.spacexdata.com/v4/capsules');
+    const data = response.data; // array of objects [{}, {}, {}]
+
+    const newCapsules = await data.map((capsuleObject) => {
+        const { serial, type, water_landings } = capsuleObject; // destructuring
+        const resultObj = {
+            serial: serial,
+            type: type,
+            waterLandings: water_landings
+        }
+        return resultObj;
+    });
+    // res.json(newCapsules);
+    // db.Capsule.collection.drop();
+    // Add newCapsules to DB
+    const allNewCapsules = await db.Capsule.create(newCapsules);
+    res.json(allNewCapsules);
+    // const allCapsules = await db.Capsule.find();
+});
+
+app.get('/v1/capsules', async (req, res) => {
+    const fetchCapsules = await db.Capsule.find(); // array of objects
+    res.json(fetchCapsules);
+});
+
+app.get('/v1/capsules/:serial', async (req, res) => {
+    // let serial = req.params.serial;
+    const { serial } = req.params;
+    const fetchCapsule = await db.Capsule.find({ serial });
+    res.json(fetchCapsule);
 });
 
 const server = app.listen(PORT, () => {
