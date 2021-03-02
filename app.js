@@ -54,7 +54,7 @@ app.get('/v1/fetch-dragons-again', async (req, res) => {
     // res.json(newDragons);
     // db.Dragons.collection.drop();
     // Add newDragonds to DB
-    const allNewDragons = await db.Dragons.create(newDragons);
+    const allNewDragons = await db.Dragon.create(newDragon);
     res.json(allNewDragons);
     // const allDragonds = await db.Dragons.find();
 });
@@ -64,10 +64,10 @@ app.get('/v1/dragons', async (req, res) => {
     res.json(fetchDragon);
 });
 
-app.get('/v1/dragons/:serial', async (req, res) => {
+app.get('/v1/dragons/:name', async (req, res) => {
     // let serial = req.params.serial;
-    const { serial } = req.params;
-    const fetchDragon = await db.Dragon.find({ serial });
+    const { name } = req.params;
+    const fetchDragon = await db.Dragon.find({ name });
     res.json(fetchDragon);
 });
 
