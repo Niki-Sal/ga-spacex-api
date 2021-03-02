@@ -68,6 +68,28 @@ app.get('/v1/capsules/:serial', async (req, res) => {
     res.json(fetchCapsule);
 });
 
+app.get('/v1/fetch-roadster', async (req, res) => {
+    // Run axios
+    const response = await axios.get('https://api.spacexdata.com/v4/roadster');
+    const data = response.data; // array of objects [{}, {}, {}]
+    // add each object info to DB
+    for (let i = 0; i < data.length; i++) {
+        let roadsterObject = data[i]; // object
+        const { name, orbit_type, id, earth_distance_km } = roadsterObject; // destructuring
+
+        db.Roadster.create({
+            name: String,
+            orbit_type: String,
+            id: {type: String, unique: true},
+            earth_distance_km: Number;
+        }, (err, newRoadster) => {
+            console.log(newRoadster);
+        });
+    }
+
+    res.json(data);
+});
+
 const server = app.listen(PORT, () => {
     console.log(`Server is running on PORT: ${PORT}`);
 });
