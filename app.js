@@ -68,6 +68,25 @@ app.get('/v1/capsules/:serial', async (req, res) => {
     res.json(fetchCapsule);
 });
 
+app.get('/v4/fetch-starlink', (req, res) => {
+    const response = axios.get('https://api.spacexdata.com/v4/starlink');
+    const data = response.data // pulling an array of objest from API
+
+    for (let i = 0; i < data.length; i++) {
+        let starlinkObject = data[i]; // object
+        const { file, object_name, creation_date } = starlinkObject; // destructuring
+
+        db.Capsule.create({
+            file: file,
+            objectName: object_name,
+            creationDate: creation_date
+        }, (err, newStarlink) => {
+            console.log(newStarlink);
+        });
+    }
+    
+});
+
 const server = app.listen(PORT, () => {
     console.log(`Server is running on PORT: ${PORT}`);
 });
