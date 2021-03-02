@@ -22,14 +22,15 @@ app.get('/v1/fetch-dragons', async (req, res) => {
     // add each object info to DB
     for (let i = 0; i < data.length; i++) {
         let dragonObject = data[i]; // object
-        const { serial, type, water_landings } = dragonObject; // destructuring
+        const { name, type, active, crew_capacity } = dragonObject; // destructuring
 
         db.Dragon.create({
-            serial: serial,
+            name: name,
             type: type,
-            waterLandings: water_landings
-        }, (err, newCapsule) => {
-            console.log(newCapsule);
+            active: active,
+            crewCapacity: crew_capacity
+        }, (err, newDragon) => {
+            console.log(newDragon);
         });
     }
 
@@ -41,11 +42,12 @@ app.get('/v1/fetch-dragons-again', async (req, res) => {
     const data = response.data; // array of objects [{}, {}, {}]
 
     const newDragon = await data.map((dragonObject) => {
-        const { serial, type, water_landings } = dragonObject; // destructuring
+        const { name, type, active, crew_capacity } = dragonObject; // destructuring
         const resultObj = {
-            serial: serial,
+            name: name,
             type: type,
-            waterLandings: water_landings
+            active: active,
+            crewCapacity: crew_capacity
         }
         return resultObj;
     });

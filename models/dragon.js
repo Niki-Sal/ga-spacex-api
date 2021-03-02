@@ -4,9 +4,10 @@ const Schema = mongoose.Schema;
 
 // Make a capsuleSchema
 const dragonSchema = new Schema({
-    name: { type: String, unique: true },
+    name: String,
     type: String,
-    waterLandings: Number,
+    active: Boolean,
+    crewCapacity: Number
 });
 
 // Model
