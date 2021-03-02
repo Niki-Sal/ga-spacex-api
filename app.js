@@ -22,10 +22,9 @@ app.get('/v1/fetch-capsules', async (req, res) => {
     for (let i = 0; i < data.length; i++) {
         let capsuleObject = data[i]; // object
         const { serial, type, water_landings } = capsuleObject; // destructuring
-<<<<<<< HEAD
-=======
+// <<<<<<< HEAD
 
->>>>>>> d80a148f58f87399c183d479e75d7b59ffaafd5b
+// >>>>>>> d80a148f58f87399c183d479e75d7b59ffaafd5b
         db.Capsule.create({
             serial: serial,
             type: type,
