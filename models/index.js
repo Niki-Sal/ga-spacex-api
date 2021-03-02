@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Launchpad = require('./launchPad');
 
 // options (object)
 // const config = {
@@ -28,5 +29,7 @@ db.on('error', (err) => {
 
 
 module.exports = {
-    Capsule: require('./capsule')
+    Capsule: require('./capsule'),
+    Launchpad: require('./launchPad')
 }
+
