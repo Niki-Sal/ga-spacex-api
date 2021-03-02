@@ -3,13 +3,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Make a capsuleSchema
-const capsuleSchema = new Schema({
-    serial: { type: String, unique: true },
+const dragonSchema = new Schema({
+    name: { type: String, unique: true },
     type: String,
     waterLandings: Number,
 });
 
 // Model
-const Capsule = mongoose.model('Capsule', capsuleSchema);
+const Dragon = mongoose.model('Dragon', dragonSchema);
 
-module.exports = Capsule;
+module.exports = Dragon;

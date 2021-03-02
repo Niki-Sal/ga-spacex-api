@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 8000;
 
 // Database
 const db = require('./models');
+const query = 'https://api.spacexdata.com/v4/dragons'
 
 
 // Route
@@ -14,16 +15,16 @@ app.get('/v1', (req, res) => {
     res.send('Welcome to GA Space X API');
 });
 
-app.get('/v1/fetch-capsules', async (req, res) => {
+app.get('/v1/fetch-dragons', async (req, res) => {
     // Run axios
-    const response = await axios.get('https://api.spacexdata.com/v4/capsules');
+    const response = await axios.get(query);
     const data = response.data; // array of objects [{}, {}, {}]
     // add each object info to DB
     for (let i = 0; i < data.length; i++) {
-        let capsuleObject = data[i]; // object
-        const { serial, type, water_landings } = capsuleObject; // destructuring
+        let dragonObject = data[i]; // object
+        const { serial, type, water_landings } = dragonObject; // destructuring
 
-        db.Capsule.create({
+        db.Dragon.create({
             serial: serial,
             type: type,
             waterLandings: water_landings
@@ -35,12 +36,12 @@ app.get('/v1/fetch-capsules', async (req, res) => {
     res.json(data);
 });
 
-app.get('/v1/fetch-capsules-again', async (req, res) => {
-    const response = await axios.get('https://api.spacexdata.com/v4/capsules');
+app.get('/v1/fetch-dragons-again', async (req, res) => {
+    const response = await axios.get(query);
     const data = response.data; // array of objects [{}, {}, {}]
 
-    const newCapsules = await data.map((capsuleObject) => {
-        const { serial, type, water_landings } = capsuleObject; // destructuring
+    const newDragon = await data.map((dragonObject) => {
+        const { serial, type, water_landings } = dragonObject; // destructuring
         const resultObj = {
             serial: serial,
             type: type,
@@ -48,24 +49,24 @@ app.get('/v1/fetch-capsules-again', async (req, res) => {
         }
         return resultObj;
     });
-    // res.json(newCapsules);
-    // db.Capsule.collection.drop();
-    // Add newCapsules to DB
-    const allNewCapsules = await db.Capsule.create(newCapsules);
-    res.json(allNewCapsules);
-    // const allCapsules = await db.Capsule.find();
+    // res.json(newDragons);
+    // db.Dragons.collection.drop();
+    // Add newDragonds to DB
+    const allNewDragons = await db.Dragons.create(newDragons);
+    res.json(allNewDragons);
+    // const allDragonds = await db.Dragons.find();
 });
 
-app.get('/v1/capsules', async (req, res) => {
-    const fetchCapsules = await db.Capsule.find(); // array of objects
-    res.json(fetchCapsules);
+app.get('/v1/dragons', async (req, res) => {
+    const fetchDragon = await db.Dragon.find(); // array of objects
+    res.json(fetchDragon);
 });
 
-app.get('/v1/capsules/:serial', async (req, res) => {
+app.get('/v1/dragons/:serial', async (req, res) => {
     // let serial = req.params.serial;
     const { serial } = req.params;
-    const fetchCapsule = await db.Capsule.find({ serial });
-    res.json(fetchCapsule);
+    const fetchDragon = await db.Dragon.find({ serial });
+    res.json(fetchDragon);
 });
 
 const server = app.listen(PORT, () => {

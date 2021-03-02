@@ -28,5 +28,5 @@ db.on('error', (err) => {
 
 
 module.exports = {
-    Capsule: require('./capsule')
+    Dragon: require('./dragon')
 }
