@@ -71,3 +71,27 @@ app.get('/v1/capsules/:serial', async (req, res) => {
 const server = app.listen(PORT, () => {
     console.log(`Server is running on PORT: ${PORT}`);
 });
+
+app.get('/v1/fetch-payloads', async (req, res) => {
+    // Run axios
+    const response = await axios.get('https://api.spacexdata.com/v4/payloads');
+    const data = response.data; // array of objects [{}, {}, {}]
+    // add each object info to DB
+    for (let i = 0; i < data.length; i++) {
+        let payloadObject = data[i]; // object
+        const { name, type, customers, nationalities, mass_lbs, orbit } = payloadObject; // destructuring
+
+        db.PayLoad.create({
+            name: name,
+            type: type,
+            customer: customers[0],
+            nationality: nationalities[0],
+            mass_lbs: mass_lbs,
+            orbit: orbit
+        }, (err, newPayLoad) => {
+            console.log(newPayLoad);
+        });
+    }
+
+    res.json(data);
+});
