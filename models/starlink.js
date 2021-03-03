@@ -6,7 +6,8 @@ const Schema = mongoose.Schema;
 const starlinkSchema = new Schema({
     file: Number,
     objectName: String,
-    creationDate: String
+    creationDate: String,
+    date: new Date()
 });
 
 // Model

@@ -1,19 +1,14 @@
 const mongoose = require('mongoose');
 
-// options (object)
-// const config = {
-//     useNewUrlParser: true,
-//     useCreateIndex: true,
-//     useUnifiedTopology: true,
-//     useFindAndModify: false
-// }
-
-mongoose.connect('mongodb://localhost/gaSpaceX', {
+// config for mongoose
+const mongooseConfig = {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
     useFindAndModify: false
-});
+}
+
+mongoose.connect('mongodb://localhost/gaSpaceX', mongooseConfig);
 
 const db = mongoose.connection;
 
@@ -26,11 +21,7 @@ db.on('error', (err) => {
     console.log(err);
 });
 
-
 module.exports = {
-    Capsule: require('./capsule')
-}
-
-module.exports = {
+    Capsule: require('./capsule'),
     Starlink: require('./starlink')
 }
