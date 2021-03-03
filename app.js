@@ -11,7 +11,6 @@ const crew_controller = require('./controllers/crew');
 app.get('/v1', (req, res) => {
       res.send('Welcome to GA Space X API');
   });
-
 app.get('/v1/fetch-capsules', async (req, res) => {
     // Run axios
     const response = await axios.get('https://api.spacexdata.com/v4/capsules');
@@ -28,6 +27,28 @@ app.get('/v1/fetch-capsules', async (req, res) => {
             console.log("Error: ", err);
         });
     }
+    res.json(data);
+});
+app.get('/v1/fetch-rockets', async (req, res) => {
+    // Run axios
+    const response = await axios.get('https://api.spacexdata.com/v4/rockets');
+    const data = response.data; // array of objects [{}, {}, {}]
+    // add each object info to DB
+    for (let i = 0; i < data.length; i++) {
+        let rocketObject = data[i]; // object
+        const { name, stages, country, description } = rocketObject; // destructuring
+
+        db.Rocket.create({
+            name,
+            stages,
+            country,
+            description,
+
+        }, (err, newRocket) => {
+            console.log(newRocket);
+        });
+    }
+
     res.json(data);
 });
 app.get('/v1/fetch-capsules-again', async (req, res) => {
