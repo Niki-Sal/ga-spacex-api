@@ -6,8 +6,7 @@ const Schema = mongoose.Schema;
 const capsuleSchema = new Schema({
     serial: { type: String, unique: true },
     type: String,
-    waterLandings: Number,
-    date: new Date()
+    waterLandings: Number
 });
 
 // Model
