@@ -1,5 +1,6 @@
 const express = require('express');
 const axios = require('axios');
+const Roadster = require('./models/roadster')
 
 // Set up App
 const app = express();
@@ -81,7 +82,7 @@ app.get('/v1/fetch-roadster', async (req, res) => {
             name: String,
             orbit_type: String,
             id: {type: String, unique: true},
-            earth_distance_km: Number;
+            earth_distance_km: Number,
         }, (err, newRoadster) => {
             console.log(newRoadster);
         });
