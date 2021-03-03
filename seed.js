@@ -19,3 +19,8 @@ const addCapsules = async () => {
     const allNewCapsules = await db.Capsule.create(newCapsules);
     res.json(allNewCapsules);
 }
+
+// run function
+addCapsules();
+
+// Do the same thing if you want to seed other collections (using models)
