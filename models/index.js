@@ -26,8 +26,8 @@ db.on('error', (err) => {
     console.log(err);
 });
 
-
 module.exports = {
     Capsule: require('./capsule'),
+    Crew: require('./crew'),
     Rocket: require('./rocket')
 }
