@@ -18,7 +18,7 @@ app.get('/v1/', (req, res) => {
   res.json({ name: 'API Set Up', greeting: 'Welcome to the our API', author: 'Rome Bell'});
 });
 
-app.use('/v1/capsules', routes.capsules);
+app.use('/v1/capsules', routes.capsule);
 app.use('/v1/starlink', routes.starlink);
 
 // Server

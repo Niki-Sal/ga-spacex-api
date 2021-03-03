@@ -23,7 +23,5 @@ db.on('error', (err) => {
 
 module.exports = {
     Capsule: require('./capsule'),
-    Starlink: require('./starlink'),
-    Crew: require('./crew'),
-    Rocket: require('./rocket')
+    Starlink: require('./starlink')
 }
