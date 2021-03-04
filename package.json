@@ -1,5 +1,5 @@
 {
-  "name": "GA Space X API",
+  "name": "api",
   "version": "1.0.0",
   "description": "Building an API using SpaceX API via Github Collaboration",
   "main": "app.js",

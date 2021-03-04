@@ -1,5 +1,5 @@
 // Seed Database
-
+const axios = require('axios');
 const db = require('./models');
 
 const addCapsules = async () => {
@@ -15,9 +15,14 @@ const addCapsules = async () => {
         }
         return resultObj;
     });
+    // console.log(newCapsules);
     // Add newCapsules to DB
     const allNewCapsules = await db.Capsule.create(newCapsules);
-    res.json(allNewCapsules);
+    console.log(allNewCapsules);
+
+    console.log('========> DATABASE SEED COMPLETE.');
+    console.log('========## What is next? \n1. Press CTRL+C => 2. Restart server => 3. test in Postman');
+    console.log('========> !! Restart server => npm start');
 }
 
 // run function
